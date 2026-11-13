@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 - JavaScript cơ bản</title>
+   
+</head>
+<body>
+    <h1>Lab 2 - Lập trình cơ sở với JavaScript</h1>
+    <p>Nhập dữ liệu rồi nhấn nút để xem kết quả từng bài.</p>
+
+
+    <section>
+        <h2>Bài 1: Kiểm tra số chẵn, lẻ</h2>
+        <label for="soChanLe">Nhập số nguyên:</label>
+        <input id="soChanLe" type="number" step="1" value="7">
+        <button onclick="kiemTraChanLe()">Kiểm tra</button>
+        <pre id="ketQua1" aria-live="polite">Kết quả sẽ hiển thị ở đây.</pre>
+    </section>
+
+
+    <section>
+        <h2>Bài 2: Tính tiền điện</h2>
+        <p>Tính lũy tiến: 50 kWh đầu giá 1.800đ/kWh; 50 kWh tiếp theo giá 2.300đ/kWh; phần trên 100 kWh giá 3.000đ/kWh.</p>
+        <label for="soDien">Số điện (kWh):</label>
+        <input id="soDien" type="number" min="0" step="any" value="335">
+        <button onclick="tinhTienDien()">Tính tiền</button>
+        <pre id="ketQua2" aria-live="polite">Kết quả sẽ hiển thị ở đây.</pre>
+        <h3>Tiền điện 910.000đ tương ứng bao nhiêu kWh?</h3>
+        <p>50 kWh đầu: 50 x 1.800 = 90.000đ.<br>
+        50 kWh tiếp: 50 x 2.300 = 115.000đ.<br>
+        Số điện vượt 100 kWh: (910.000 - 90.000 - 115.000) / 3.000 = 235 kWh.<br>
+        <strong>Tổng số điện: 100 + 235 = 335 kWh.</strong></p>
+    </section>
+
+
+    <section>
+        <h2>Bài 3: Tính lương theo chức vụ và ngày công</h2>
+        <label for="chucVu">Chức vụ:</label>
+        <select id="chucVu">
+            <option value="intern">Intern - Thực tập (hệ số 1.0)</option>
+            <option value="staff">Staff - Nhân viên (hệ số 1.5)</option>
+            <option value="senior">Senior - Chuyên viên (hệ số 2.0)</option>
+            <option value="manager">Manager - Quản lý (hệ số 3.0)</option>
+        </select><br>
+        <label for="ngayCong">Số ngày công:</label>
+        <input id="ngayCong" type="number" min="0" max="31" step="any" value="24">
+        <button onclick="tinhLuong()">Tính lương</button>
+        <p>Lương = hệ số × ngày công × 5.000.000 / 24.</p>
+        <pre id="ketQua3" aria-live="polite">Kết quả sẽ hiển thị ở đây.</pre>
+    </section>
+
+
+    <section>
+        <h2>Bài 4: Bảng cửu chương từ 2 đến 9</h2>
+        <button onclick="inBangCuuChuong()">In bảng cửu chương</button>
+        <pre id="ketQua4" aria-live="polite">Kết quả sẽ hiển thị ở đây.</pre>
+    </section>
+
+
+    <section>
+        <h2>Bài 5: Kiểm tra số nguyên tố</h2>
+        <label for="soNguyenTo">Nhập số nguyên:</label>
+        <input id="soNguyenTo" type="number" step="1" value="7">
+        <button onclick="kiemTraSoNguyenTo()">Kiểm tra</button>
+        <pre id="ketQua5" aria-live="polite">Kết quả sẽ hiển thị ở đây.</pre>
+    </section>
+    <script>
+// Bài 1: Chia hết cho 2 là số chẵn, ngược lại là số lẻ.
+        function kiemTraChanLe() {
+            let duLieu = document.getElementById("soChanLe").value;
+            let n = Number(duLieu);
+            let ketQua;
+            if (duLieu.trim() === "" || !Number.isSafeInteger(n)) {
+                ketQua = "Vui lòng nhập số nguyên hợp lệ trong phạm vi an toàn.";
+            } else if (n % 2 === 0) {
+                ketQua = n + " là số chẵn.";
+            } else {
+                ketQua = n + " là số lẻ.";
+            }
+            document.getElementById("ketQua1").textContent = ketQua;
+        }
+
+
+        // Bài 2: Chỉ phần điện vượt mỗi mốc mới tính theo giá bậc sau.
+        function tinhTienDien() {
+            let duLieu = document.getElementById("soDien").value;
+            let kWh = Number(duLieu);
+            let tienDien;
+            if (duLieu.trim() === "" || !Number.isFinite(kWh) || kWh < 0) {
+                document.getElementById("ketQua2").textContent = "Vui lòng nhập số kWh không âm.";
+                return;
+            }
+            if (kWh <= 50) {
+                tienDien = kWh * 1800;
+            } else if (kWh <= 100) {
+                tienDien = 50 * 1800 + (kWh - 50) * 2300;
+            } else {
+                tienDien = 50 * 1800 + 50 * 2300 + (kWh - 100) * 3000;
+            }
+            document.getElementById("ketQua2").textContent =
+                "Số điện: " + kWh + " kWh\nTiền điện: " + tienDien.toLocaleString("vi-VN") + " đồng";
+        }
+
+
+        // Bài 3: Dùng switch để chọn hệ số theo chức vụ.
+        function tinhLuong() {
+            let chucVu = document.getElementById("chucVu").value;
+            let duLieu = document.getElementById("ngayCong").value;
+            let ngayCong = Number(duLieu);
+            let heSo;
+            if (duLieu.trim() === "" || !Number.isFinite(ngayCong) || ngayCong < 0 || ngayCong > 31) {
+                document.getElementById("ketQua3").textContent = "Vui lòng nhập ngày công từ 0 đến 31.";
+                return;
+            }
+            switch (chucVu) {
+                case "intern":
+                    heSo = 1.0;
+                    break;
+                case "staff":
+                    heSo = 1.5;
+                    break;
+                case "senior":
+                    heSo = 2.0;
+                    break;
+                case "manager":
+                    heSo = 3.0;
+                    break;
+                default:
+                    document.getElementById("ketQua3").textContent = "Chức vụ không hợp lệ.";
+                    return;
+            }
+            let luongCoBan = 5000000;
+            let ngayCongQuyDinh = 24;
+            let luong = heSo * ngayCong * luongCoBan / ngayCongQuyDinh;
+document.getElementById("ketQua3").textContent = "Hệ số: " + heSo + "\nLương: " + Math.round(luong).toLocaleString("vi-VN") + " đồng";
+        }
+
+
+        // Bài 4: Vòng ngoài chọn bảng; vòng trong nhân từ 1 đến 10.
+        function inBangCuuChuong() {
+            let ketQua = "";
+            for (let i = 2; i <= 9; i++) {
+                ketQua += "Bảng cửu chương " + i + "\n";
+                for (let j = 1; j <= 10; j++) {
+                    ketQua += i + " x " + j + " = " + (i * j) + "\n";
+                }
+                ketQua += "\n";
+            }
+            document.getElementById("ketQua4").textContent = ketQua;
+        }
+
+
+        // Bài 5: Số nguyên tố phải >= 2 và không có ước từ 2 đến căn bậc hai của n.
+        function laSoNguyenTo(n) {
+            if (n < 2) {
+                return false;
+            }
+            for (let i = 2; i * i <= n; i++) {
+                if (n % i === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        function kiemTraSoNguyenTo() {
+            let duLieu = document.getElementById("soNguyenTo").value;
+            let n = Number(duLieu);
+            if (duLieu.trim() === "" || !Number.isSafeInteger(n)) {
+                document.getElementById("ketQua5").textContent = "Vui lòng nhập số nguyên hợp lệ trong phạm vi an toàn.";
+                return;
+            }
+            if (laSoNguyenTo(n)) {
+                document.getElementById("ketQua5").textContent = n + " là số nguyên tố.";
+            } else {
+                document.getElementById("ketQua5").textContent = n + " không phải là số nguyên tố.";
+            }
+        }
+    </script>
+</body>
+</html>
