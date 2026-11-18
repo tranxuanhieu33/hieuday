@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 - Lập trình JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            line-height: 1.6;
+        }
+        section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 0;
+        }
+        label {
+            display: inline-block;
+            margin: 6px 0 3px;
+            font-weight: bold;
+        }
+        input, select, textarea, button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .btn-group {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lab 3 - Lập trình JavaScript</h1>
+    <p style="text-align: center;">Mở Console (F12) để xem kết quả log tự động từ <code>lab3.js</code> hoặc tương tác trực tiếp bên dưới.</p>
+
+    <!-- BÀI 1 -->
+    <section>
+        <h2>Bài 1: Kiểm tra số chẵn</h2>
+        <label for="soN">Nhập số n:</label>
+        <input id="soN" type="number" step="1" value="10">
+        <button onclick="handleBai1()">Kiểm tra</button>
+        <pre id="ketQua1">Kết quả sẽ hiển thị ở đây.</pre>
+    </section>
+
+    <!-- BÀI 2 -->
+    <section>
+        <h2>Bài 2: Tính tiền điện &amp; Số điện</h2>
+        <p>Bậc 1: 50 kWh đầu giá 1.800đ | Bậc 2: 50 kWh kế giá 2.300đ | Bậc 3: trên 100 kWh giá 3.000đ</p>
+        
+        <div>
+            <label for="kwhInput">1. Tính tiền điện theo số kWh:</label><br>
+            <input id="kwhInput" type="number" min="0" step="any" value="100">
+            <button onclick="handleBai2TienDien()">Tính tiền</button>
+            <pre id="ketQua2Tien">Kết quả tính tiền điện sẽ hiển thị ở đây.</pre>
+        </div>
+
+        <div style="margin-top: 15px;">
+            <label for="tienInput">2. Tính số điện tiêu thụ theo số tiền (đồng):</label><br>
+            <input id="tienInput" type="number" min="0" step="any" value="910000">
+            <button onclick="handleBai2SoDien()">Tính số kWh</button>
+            <pre id="ketQua2So">Kết quả tính số điện sẽ hiển thị ở đây.</pre>
+        </div>
+    </section>
+
+    <!-- BÀI 3 -->
+    <section>
+        <h2>Bài 3: Tính lương theo chức vụ</h2>
+        <label for="chucVuSelect">Chức vụ:</label>
+        <select id="chucVuSelect">
+            <option value="intern">Intern (Hệ số: 1.0)</option>
+            <option value="staff">Staff (Hệ số: 1.5)</option>
+            <option value="senior">Senior (Hệ số: 2.0)</option>
+            <option value="manager">Manager (Hệ số: 3.0)</option>
+        </select><br>
+        <label for="ngayCongInput">Số ngày công:</label>
+        <input id="ngayCongInput" type="number" min="0" max="31" step="any" value="24">
+        <button onclick="handleBai3()">Tính lương</button>
+        <pre id="ketQua3">Kết quả lương sẽ hiển thị ở đây.</pre>
+    </section>
+
+    <!-- BÀI 4 -->
+    <section>
+        <h2>Bài 4: Chuẩn hóa câu</h2>
+        <label for="cauInput">Nhập chuỗi cần chuẩn hóa:</label><br>
+        <textarea id="cauInput" rows="3">   xin chao   cac ban.    hom nay   troi dep qua   !toi   di hoc ve ? </textarea><br>
+        <button onclick="handleBai4()">Chuẩn hóa</button>
+        <pre id="ketQua4">Kết quả chuỗi sau chuẩn hóa sẽ hiển thị ở đây.</pre>
+    </section>
+
+    <!-- BÀI 5 -->
+    <section>
+        <h2>Bài 5: Calculator</h2>
+        <label for="soA">Số a:</label>
+        <input id="soA" type="number" step="any" value="10">
+        <label for="soB">Số b:</label>
+        <input id="soB" type="number" step="any" value="5"><br>
+        
+        <div class="btn-group">
+            <label>Phép tính: </label>
+            <button onclick="handleBai5('+')">+</button>
+            <button onclick="handleBai5('-')">-</button>
+            <button onclick="handleBai5('*')">&times;</button>
+            <button onclick="handleBai5('/')">&divide;</button>
+        </div>
+        <pre id="ketQua5">Kết quả phép tính sẽ hiển thị ở đây.</pre>
+    </section>
+
+    <!-- Nhúng file lab3.js để chạy code console.log và dùng lại các hàm -->
+    <script src="lab3.js"></script>
+
+    <!-- UI Handlers -->
+    <script>
+        function handleBai1() {
+            let n = Number(document.getElementById("soN").value);
+            let kq = kiemTraSoChan(n);
+            document.getElementById("ketQua1").textContent = `Số ${n}: ${kq}`;
+        }
+
+        function handleBai2TienDien() {
+            let kwh = Number(document.getElementById("kwhInput").value);
+            let tien = tinhTienDien(kwh);
+            document.getElementById("ketQua2Tien").textContent = 
+                `Tiền điện cho ${kwh} kWh: ${tien.toLocaleString("vi-VN")} đồng`;
+        }
+
+        function handleBai2SoDien() {
+            let tien = Number(document.getElementById("tienInput").value);
+            let kwh = tinhSoDien(tien);
+            document.getElementById("ketQua2So").textContent = 
+                `Với số tiền ${tien.toLocaleString("vi-VN")} đồng, dùng được: ${kwh} kWh`;
+        }
+
+        function handleBai3() {
+            let chucVu = document.getElementById("chucVuSelect").value;
+            let ngayCong = Number(document.getElementById("ngayCongInput").value);
+            let luong = tinhLuong(chucVu, ngayCong);
+            if (typeof luong === "number") {
+                document.getElementById("ketQua3").textContent = 
+                    `Lương (${chucVu.toUpperCase()}, ${ngayCong} ngày công): ${luong.toLocaleString("vi-VN")} đồng`;
+            } else {
+                document.getElementById("ketQua3").textContent = luong;
+            }
+        }
+
+        function handleBai4() {
+            let str = document.getElementById("cauInput").value;
+            let kq = chuanHoaCau(str);
+            document.getElementById("ketQua4").textContent = kq;
+        }
+
+        function handleBai5(op) {
+            let a = Number(document.getElementById("soA").value);
+            let b = Number(document.getElementById("soB").value);
+            let kq = calculator(a, b, op);
+            document.getElementById("ketQua5").textContent = `${a} ${op} ${b} = ${kq}`;
+        }
+    </script>
+</body>
+</html>
